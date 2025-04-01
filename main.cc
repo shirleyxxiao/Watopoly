@@ -70,7 +70,7 @@ void selectPlayers(int numPlayers, Board *b){
    if (load_game == false){
        cout << "Character select! Please choose your character, here are the options: <Name> <Char>" << endl;
        cout << BLUE << "---------------------------------------------------------------------------------------------------\n";
-       cout << "| Name | Goose | GRT Bus | Tim Hortons Donghnut | Professor | Student | Money | Laptop | Pink Tie |\n";
+       cout << "| Name | Goose | GRT Bus | Tim Hortons Doughnut | Professor | Student | Money | Laptop | Pink Tie |\n";
        cout << "---------------------------------------------------------------------------------------------------\n";
        cout << "| Char |   G   |    B    |           D          |     P     |    S    |   $   |    L   |    T     |\n";
        cout << "---------------------------------------------------------------------------------------------------\n" << RESET;
