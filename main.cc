@@ -462,7 +462,7 @@ int main(int argc, char* argv[]){
                 boardMain.printBoard();          
             }else if (command == "total"){
                 cout << "If you were to sell all your improvements and mortgage all your properties, you would have: $" << boardMain.vec_players_selected[boardMain.getCurrPlayer()]->total_worth() << endl;
-            } else if (command == "roll" && didntRoll == false){
+            } else if (command == "roll" && didntRoll == false){ //NEED TO ADD CASE WHEN ROLLING DOUBLES
                 if (fair_dice == false){
                     int x;
                     int y;
