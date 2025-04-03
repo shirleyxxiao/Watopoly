@@ -11,7 +11,6 @@ using namespace std;
 
 const int bottomLength = 7;
 
-//Gym::Gym(string name, size_t blockPosition, Player *owner): Ownable{name, blockPosition, true, owner, 150} {}
 Gym::Gym(string name, size_t blockPosition): Ownable{name, blockPosition, true, 150} {}
 
 
