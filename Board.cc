@@ -909,16 +909,76 @@ void Board::auction(Building *building){
     int bid = (static_cast<Ownable*>(building))->getCost(); // !! can probably change this function to take in Ownable* instead to avoid static casting (also do we want to make it is that the player cannot make the bid higher than what they have in money??)
     cout << "****BEGIN AUCTION:****" << endl;
     cout << "Beginning action at: $" << (static_cast<Ownable*>(building))->getCost() << endl;
+
+    while (temp_vec.size() > 1){
+
+        for (int i = 0; i < temp_vec.size(); ++i){
+            cout << "Dear " << temp_vec[i]->getName() << ", would you like to raise the current bid (b <new bid number>) or withdraw from the auction (w): " << endl;
+            cin >> c;
+            if (c == 'b') { //up the bid
+                //cases:
+                //1. less than or equal => invalid
+                //2. greater
+                //3. invalid
+                cin >> n; //read in their bid amount
+                while (true) { //or just cin >> n?
+                    cout << n << endl;
+                    if (n > temp_vec[i]->getMoney()) {
+                        cout << "This bid is out of your price range, please enter again <number> (your balance is $" << temp_vec[i]->getMoney() << "): " << endl;
+                        cin >> n;
+                        if (cin.fail()) {
+                            cin.clear();
+                            cin.ignore();
+                        }
+                    } else if (n > bid) {
+                        bid = n;
+                        cout << "THE NEW BID IS: $" << bid << endl;
+                        break;
+                    } else if (n <= bid) { //here
+                        cout << "This bid is lower than or equal to the current bid, please enter a sum that is higher <number>: " << endl;
+                        cin >> n;
+                        if (cin.fail()) {
+                            cin.clear();
+                            cin.ignore();
+                        }
+                        //break;
+                    } else {
+                        cout << "Invalid command entered. Please enter a sum that is higher <number>:" << endl;
+                        cin >> n;
+
+                        if (cin.fail()) {
+                            cin.clear();
+                            cin.ignore();
+                        }
+                        //break;
+                    }
+                } 
+
+            } else if (c == 'w') { //withdraw
+                cout << "You have been withdrawn from the Auction." << endl;
+                    temp_vec.erase(temp_vec.begin() + i); //removes the player from the auction vector 
+                    if (temp_vec.size() != 1){
+                        i--;
+                    }
+            } else { //invalid command
+                cout << "Invalid command, auction proceeds to next contestant." << endl;
+            }
+        }
+
+    }
+
+    //maybe delete the following while loop
+/*
     while (temp_vec.size() > 1){
         for (int i = 0; i < temp_vec.size(); ++i){
             cout << "Dear " << temp_vec[i]->getName() << ", would you like to raise the current bid (b <new bid number>) or withdraw from the auction (w): " << endl;
             cin >> c; 
             if (c == 'b'){
                 bool lower = true;
-                //while (lower){
+                while (lower){
                 //cin >> n; //added
                 //while (n < temp_vec[i]->getMoney() &&  n > bid){
-                    //cin >> n;
+                    cin >> n;
                     if (n <= bid){
                         cout << "This bid is lower than or equal to the current bid, please enter a sum that is higher <number>: " << endl;
                         //fix logic here??
@@ -946,6 +1006,8 @@ void Board::auction(Building *building){
         }
         cout << "temp_vec.size: " << temp_vec.size() << endl;
     }
+*/
+
     // temp_vec is now one element who is the owner of the building 
     //if getOwner returns a nullptr then NO OWNER (BANK) 
     cout << "****AUCTION HAS ENDED.****" << endl;
