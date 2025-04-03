@@ -275,6 +275,7 @@ int main(int argc, char* argv[]){
                 boardMain.reset();
                 return 0;
             }
+           
             cout << "You entered: " << command << endl; 
             if (command == "roll" && didntRoll && boardMain.vec_players_selected[boardMain.getCurrPlayer()]->getJailStatusNum() == 0){ 
                 int sum_of_roll = 0;
@@ -282,6 +283,11 @@ int main(int argc, char* argv[]){
                     if (fair_dice){
                         DiceRoll(&v);
                         sum_of_roll = v[0] + v[1];
+                        if (v[0] == v[1]) { //if rolled doubles, can roll again
+                            didntRoll = true;
+                        } else {
+                            didntRoll = false;
+                        } 
                     } else { 
                         int x;
                         int y;
@@ -296,6 +302,11 @@ int main(int argc, char* argv[]){
                             cin >> y;
                         }
                         sum_of_roll = x + y;
+                        if (x == y) { //if rolled doubles, can roll again
+                            didntRoll = true;
+                        } else {
+                            didntRoll = false;
+                        }
                     }
                 cout << "your dice sum is: " << sum_of_roll << endl;
                 boardMain.vec_players_selected[boardMain.getCurrPlayer()]->setPos(sum_of_roll); //updates the player position
@@ -308,7 +319,7 @@ int main(int argc, char* argv[]){
                 boardMain.printBoard(); 
                 
                 boardMain.squareProcessing(sum_of_roll, fair_dice);
-                didntRoll = false;
+                //didntRoll = false;
             } else if (command == "save"){ // save <filename>
                 boardMain.stateOfBoardChange(); 
                 string filename;

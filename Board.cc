@@ -922,7 +922,6 @@ void Board::auction(Building *building){
                 //3. invalid
                 cin >> n; //read in their bid amount
                 while (true) { //or just cin >> n?
-                    cout << n << endl;
                     if (n > temp_vec[i]->getMoney()) {
                         cout << "This bid is out of your price range, please enter again <number> (your balance is $" << temp_vec[i]->getMoney() << "): " << endl;
                         cin >> n;
