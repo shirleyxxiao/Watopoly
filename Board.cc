@@ -474,6 +474,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
                 if (vec_buildings[j]->getBName() == trading[i]){
                     if (!(vec_buildings[j]->getOwnableStatus())){
                         cout << "Trade rejected. This building is unownable." << endl;
+                        cout << "You can continue your turn:" << endl;
                         return;
                     }
                     if (trading[i] == giveMoney) {
@@ -486,6 +487,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
                             if(static_cast<Academic*>(give)->getLevel() != 0) {
                                 cout << "Trade rejected, you cannot trade a property with improvements." << endl; 
+                                cout << "You can continue your turn:" << endl;
                                 return;     
                             }
                             
@@ -502,6 +504,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
                         if(receive->getBType() == 'A') {
                             if(static_cast<Academic*>(receive)->getLevel() != 0) {
                                 cout << "Trade rejected. You cannot trade a property with improvements." << endl;    
+                                cout << "You can continue your turn:" << endl;
                                 return;  
                             }
                             
@@ -517,6 +520,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
         if (!giveBuilding && !receiveBuilding) {
             cout << " Trade rejected. Invalid trade." << endl;
+            cout << "You can continue your turn:" << endl;
             return;
         }
         //Accept/Reject Stage
@@ -532,6 +536,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
         if (choice == "reject") {
             cout << name << " has rejected the offer." << endl;
+            cout << "You can continue your turn:" << endl;
             return;
         }
 
@@ -542,7 +547,6 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
         //4. redefine give and receive
         //5. if the building is mortgaged, need to consider differently!! march 28th
         
-
         //Money Building
         if (!giveBuilding && receiveBuilding) {
             //how much the player is giving, convert to integer
@@ -554,19 +558,22 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
             if ((giveM + receiveMortgage) > bank) {
                 cout << "Trade rejected. You do not have enough money to make this trade" <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
             Player *tmpPlayer = getOwner(receive);
             if(tmpPlayer == nullptr) {
-                cout << "Trade rejected. " << name << " does not own " << receiveMoney <<endl;
+                // receiveMoney
+                cout << "Trade rejected. " << name << " does not own " << receive->getBName() <<endl; 
+                cout << "You can continue your turn:" << endl;
                 return;
             }
-
+    
             string receiveName = tmpPlayer->getName();
-
             if ( receiveName != name) { //verifying ownership
                 cout << "Trade rejected. " << name << " does not own " << receiveMoney <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
@@ -581,19 +588,24 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
             player->setMoney(receiveMortgage);
 
             cout << "Trade succesful! " <<endl;
+            cout << "You can continue your turn:" << endl;
             return;
         } else if (giveBuilding && receiveBuilding) {
             Player *tmpPlayer1 = getOwner(receive);
-
+            /*
             if(tmpPlayer1) {
                 cout << "Trade rejected. " << name << " does not own " << receiveMoney <<endl;
                 return;
             }
+            */
+            
 
+            
             string receiverBuilding = tmpPlayer1->getName();
-
+            cout << receiverBuilding <<endl;
             if ( receiverBuilding != name ) { //verifying ownership
                 cout << "Trade rejected. " << name << " does not own " << receiveMoney <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
@@ -602,6 +614,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
             //if no owner
             if(tmpPlayer == nullptr) {
                 cout << "Trade rejected. " << giveName << " does not own " << receiveMoney <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
@@ -610,6 +623,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
             if ( buildingOwner != giveName) { //verifying ownership
                 cout << "Trade rejected. " << giveName << " does not own " << giveMoney <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
@@ -619,11 +633,13 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
             if ( receiveMortgage > bankP ) {
                 cout << "Trade rejected. You do not have enough money to make this trade" <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
             if ( giveMortgage > bankR ) {
                 cout << "Trade rejected. You do not have enough money to make this trade" <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
@@ -640,6 +656,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
             setOwner(give, reqFrom);
 
             cout << "Trade succesful! " <<endl;
+            cout << "You can continue your turn:" << endl;
             return;
         } else if (giveBuilding && !receiveBuilding) {  //BUILDING MONEY
             int receiveM = stoi(receiveMoney);
@@ -647,6 +664,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
             if ((receiveM + giveMortgage) > bank) {
                 cout << "Trade rejected. " << name << " does not have enough money to make this trade" <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
@@ -655,6 +673,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
             if(tmpPlayer == nullptr) {
                 cout << "Trade rejected. " << giveName << " does not own " << receiveMoney <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
@@ -662,6 +681,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
 
             if (buildingOwner != giveName) { //verifying ownership
                 cout << "Trade rejected. " << giveName << " does not own " << giveMoney <<endl;
+                cout << "You can continue your turn:" << endl;
                 return;
             }
 
@@ -675,6 +695,7 @@ void Board::trade(string name, string giveMoney, string receiveMoney, Player *pl
             reqFrom->setMoney(receiveM);
             reqFrom->setMoney(giveMortgage);
             cout << "Trade succesful! " <<endl;
+            cout << "You can continue your turn:" << endl;
             return;
             
         } else {
@@ -698,9 +719,6 @@ void Board::mortgage(Building *property, Player *player){
     //4. check improvements are sold
     //5. change mortgage to true, by setMortgage(false) => non-owners do not have to pay rent when landed
     //6. increase player money by half of the property cost, through getCost in ownable
-
-    //cout << "hello" <<endl;
-
     Ownable *ownable = static_cast<Ownable*>(property);
     if (ownable->getMortgageState()) {
         cout << "Mortgage Failed. " << ownable->getBName() << " is already mortgaged" <<endl;
@@ -773,7 +791,6 @@ void Board::unmortgage(Building *property, Player *player){
 
 bool Board::bankrupt(Player *player, int Owed, Player *toWho){
     try {
-
         if (player->getMoney() >= Owed) { //has enough money to pay
             cout << "You have enough money to pay your debts, you do not meet the criteria to declare Bankruptcy." << endl; 
             return false;
@@ -807,7 +824,7 @@ bool Board::bankrupt(Player *player, int Owed, Player *toWho){
                         } else {
                             if (player->properties[i]->getBType() == 'A') {
                                 cout << "- improvement number: " << (static_cast<Academic*>(player->properties[i]))->getLevel() << endl;
-                            }else{
+                            } else{
                                 cout << endl;
                             }
                         }  
@@ -1142,7 +1159,6 @@ void Board::setOwner(Building *b, Player *p) {
     p->addOwnable(o);
 }
 
-
 void Board::removeOwner(Building *b) {
 
     Player *removeOwnership = getOwner(b);
@@ -1172,7 +1188,7 @@ void Board::addBuildingINIT(string Bname, string block, int improvements, int po
 void Board::squareProcessing(int sum_of_roll, bool fair_dice){
     int pos = vec_players_selected[getCurrPlayer()]->getPos();
     cout << "You landed on: " << vec_buildings[pos]->getBName() << endl;
-    if (vec_buildings[pos]->getOwnableStatus()){ //means is an owneable building
+    if (vec_buildings[pos]->getOwnableStatus()){ //means is an ownable building
         //check owenrship
         if (getOwner(vec_buildings[pos].get())){ //has an owner
             if(getOwner(vec_buildings[pos].get())->getName() == vec_players_selected[getCurrPlayer()]->getName()){ //owner by this player
