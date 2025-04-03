@@ -967,47 +967,6 @@ void Board::auction(Building *building){
 
     }
 
-    //maybe delete the following while loop
-/*
-    while (temp_vec.size() > 1){
-        for (int i = 0; i < temp_vec.size(); ++i){
-            cout << "Dear " << temp_vec[i]->getName() << ", would you like to raise the current bid (b <new bid number>) or withdraw from the auction (w): " << endl;
-            cin >> c; 
-            if (c == 'b'){
-                bool lower = true;
-                while (lower){
-                //cin >> n; //added
-                //while (n < temp_vec[i]->getMoney() &&  n > bid){
-                    cin >> n;
-                    if (n <= bid){
-                        cout << "This bid is lower than or equal to the current bid, please enter a sum that is higher <number>: " << endl;
-                        //fix logic here??
-                    } else if (n > temp_vec[i]->getMoney()){
-                        cout << "This bid is out of your price range, please enter again <number> (your balance is $" << temp_vec[i]->getMoney() << "): " << endl;
-                        //after it is in this case, there is an issue
-                        //lower = false;
-
-                    } else {
-                        bid = n;
-                        lower = false;
-                    } 
-                }
-                
-                cout << "THE NEW BID IS: $" << bid << endl;
-            } else if (c == 'w') {
-                cout << "You have been withdrawn from the Auction." << endl;
-                temp_vec.erase(temp_vec.begin() + i); //removes the player from the auction vector 
-                if (temp_vec.size() != 1){
-                    i--;
-                }
-            } else {
-                cout << "Invalid command, auction proceeds to next contestant." << endl;
-            }
-        }
-        cout << "temp_vec.size: " << temp_vec.size() << endl;
-    }
-*/
-
     // temp_vec is now one element who is the owner of the building 
     //if getOwner returns a nullptr then NO OWNER (BANK) 
     cout << "****AUCTION HAS ENDED.****" << endl;
