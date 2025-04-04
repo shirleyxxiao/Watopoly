@@ -408,7 +408,7 @@ int main(int argc, char* argv[]){
                     } 
                 }
                 didntRoll = true;
-            }else if (command == "trade"){ // trade <name> <give> <receive>
+            } else if (command == "trade"){ // trade <name> <give> <receive>
                 string name, give, receive;
                 cin >> name >> give >> receive;
                 bool playerExists = false;
@@ -418,7 +418,8 @@ int main(int argc, char* argv[]){
                         break;
                     }
                 }
-                if (playerExists){
+                if (playerExists){ //ISSUE WITH THIS CHECK ? maybe not, on first iteration of game, if try to trade get the not valid player
+                    cout << "we currently have this many players: " << boardMain.vec_players_selected.size() <<endl;
                     boardMain.trade(name, give, receive, boardMain.vec_players_selected[boardMain.getCurrPlayer()].get());
                 } else {
                     cout << name << " is not a valid player name in this game. Continue your turn: " << endl;

@@ -1196,7 +1196,7 @@ void Board::squareProcessing(int sum_of_roll, bool fair_dice){
             } else { //owned by other player
                 if (static_cast<Ownable*>(vec_buildings[pos].get())->getMortgageState() == false){
                     int owed = moneyOwed(vec_buildings[pos].get(), sum_of_roll);
-                    cout << "This buliding is owned, please pay $" << owed << endl;
+                    cout << "This building is owned, please pay $" << owed << endl;
                     if (vec_players_selected[getCurrPlayer()]->getMoney() >= owed){ //moneyOwed is the owneable building's rent/tuiton (with monopoly and/or improvements IF ITS ACADEMIC etc) (moneyOwed will check if it is a RES or GYM - maybe consider adding a bool in buildings)
                         vec_players_selected[getCurrPlayer()]->setMoney((owed * -1)); // removes the money owed from the player who landed on the space
                         getOwner(vec_buildings[pos].get())->setMoney(owed); //pays thea owner the money owed
