@@ -349,7 +349,9 @@ int Board::moneyOwed(Building *building, int diceSum){
         }
         
         int gymNum = owner->getNumGymOwned();
-        return gym->usageFee(diceSum, gymNum);
+        owed = gym->usageFee(diceSum, gymNum);
+        cout << owed;
+        return owed; //CHECK IF RETURNING RIGHT NUMBER
     }
 
     return owed;
@@ -940,13 +942,33 @@ void Board::auction(Building *building){
                 cin >> n; //read in their bid amount
                 while (true) { //or just cin >> n?
                     if (n > temp_vec[i]->getMoney()) {
-                        cout << "This bid is out of your price range, please enter again <number> (your balance is $" << temp_vec[i]->getMoney() << "): " << endl;
-                        cin >> n;
-                        if (cin.fail()) {
-                            cin.clear();
-                            cin.ignore();
+
+                        if (n <= bid || n >= bid) {
+                            cout << "You do not have enough money to bid. You have been withdrawn from the Auction." << endl;
+                            temp_vec.erase(temp_vec.begin() + i); //removes the player from the auction vector 
+                            if (temp_vec.size() != 1){
+                                i--;
+                            }
+                        } else {
+                            cout << "This bid is out of your price range, please enter again <number> (your balance is $" << temp_vec[i]->getMoney() << "): " << endl;
+                            cin >> n;
+                            if (cin.fail()) {
+                                cin.clear();
+                                cin.ignore();
+                            }
                         }
+
+                        
                     } else if (n > bid) {
+
+                        if (n > temp_vec[i]->getMoney() && n <= bid) {
+                            cout << "You do not have enough money to bid. You have been withdrawn from the Auction." << endl;
+                            temp_vec.erase(temp_vec.begin() + i); //removes the player from the auction vector 
+                            if (temp_vec.size() != 1){
+                                i--;
+                            }
+                        }
+                        
                         bid = n;
                         cout << "THE NEW BID IS: $" << bid << endl;
                         break;
@@ -1218,6 +1240,8 @@ void Board::squareProcessing(int sum_of_roll, bool fair_dice){
                 if (ans == "YES"){
                     if (vec_players_selected[getCurrPlayer()]->getMoney() < static_cast<Ownable*>(vec_buildings[vec_players_selected[getCurrPlayer()]->getPos()].get())->getCost()){
                         cout << "You do not have enough money to get this building. Continue your turn: " << endl;
+                        auction(vec_buildings[vec_players_selected[getCurrPlayer()]->getPos()].get());
+                        temp = false;
                     } else {
                         vec_players_selected[getCurrPlayer()]->setMoney((static_cast<Ownable*>(vec_buildings[vec_players_selected[getCurrPlayer()]->getPos()].get())->getCost() * -1)); //removes the money from the player who bought it
                         setOwner(vec_buildings[vec_players_selected[getCurrPlayer()]->getPos()].get(), vec_players_selected[getCurrPlayer()].get()); //sets the player to be the owner of the building
